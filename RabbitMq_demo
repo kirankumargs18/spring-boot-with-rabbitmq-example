@@ -1,0 +1,62 @@
+RabbitMq Demo
+=============
+
+application.properties
+======================
+
+#RabbitMq Properties
+spring.rabbitmq.host=localhost
+spring.rabbitmq.port=5672
+spring.rabbitmq.username=guest
+spring.rabbitmq.password=guest
+
+#exchange,queue and routing key
+rabbitmq.queue.name=message_queue
+rabbitmq.queue.exchange=message_exchange
+rabbitmq.routing.key=routing_key
+
+
+Producer Application
+====================
+
+create configuration class
+===========================
+
+define beans for Queue, Exchange and Binding and MessageConverter
+
+Note : Spring boot auto configuration provides the following beans
+       ===========================================================
+       Connection Factory
+       RestTemplate
+       RestAdmin
+       
+create Producer clas
+====================
+
+we need exchange and routing key
+Autowire RabbitTemplate and use this send message or the object
+
+ex:- rabbitTemplate.convertAndSend(exchange, routingKey, message);
+
+
+Consumer Application
+====================
+
+create configuration class
+==========================
+
+define beans for Queue, Exchange and Binding
+
+Note : Spring boot auto configuration provides the following beans
+       ===========================================================
+       Connection Factory
+       RestTemplate
+       RestAdmin
+       
+Consumer Application
+====================
+
+use @RabbitListener(queues = "${rabbitmq.queue.name}")
+
+The type of message(can be object) in the receiver(Consumer) should be same as type of message(can be objects) placed in the exchange 
+
